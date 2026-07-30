@@ -104,10 +104,42 @@ const darAltaHospitalaria = async (id_internacion, id_cama) => {
   }
 };
 
+const cancelarInternacion = async (id_internacion, id_cama) => {
+  let connection;
+  try {
+    connection = await pool.getConnection();
+    await connection.beginTransaction();
+
+    await connection.query(
+      "UPDATE test.Internaciones SET estado = 'Cancelada' WHERE id = ?",
+      [id_internacion]
+    );
+
+    await connection.query(
+      "UPDATE test.Camas SET estado = 'Libre', higienizada = TRUE WHERE id = ?",
+      [id_cama]
+    );
+    
+    await connection.commit();
+    
+  } catch (error) {
+    if (connection) {
+      await connection.rollback();
+    }
+    console.error('Error en la transacción de cancelar internación:', error);
+    throw new Error('Error al cancelar la internación');
+  } finally {
+    if (connection) {
+      connection.release();
+    }
+  }
+};
+
 module.exports = {
   createInternacion,
   getInternacionesActivas,
   getInternacionById,
   findActiveInternacionByPacienteId,
-  darAltaHospitalaria
+  darAltaHospitalaria,
+  cancelarInternacion
 };

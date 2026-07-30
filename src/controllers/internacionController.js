@@ -66,8 +66,20 @@ const procesarAlta = async (req, res) => {
   }
 };
 
+const cancelarInternacion = async (req, res) => {
+  try {
+    const { id_internacion, id_cama } = req.body;
+    await Internacion.cancelarInternacion(id_internacion, id_cama);
+    res.redirect('/evaluaciones');
+  } catch (error) {
+    console.error('Error en el controlador al cancelar internacion:', error);
+    res.status(500).send('Error interno del servidor al cancelar la internación.');
+  }
+};
+
 module.exports = {
   mostrarFormularioNuevaInternacion,
   crearInternacion,
-  procesarAlta
+  procesarAlta,
+  cancelarInternacion
 };

@@ -33,6 +33,24 @@ const crearPaciente = async (req, res) => {
   }
 };
 
+const crearPacienteAnonimo = async (req, res) => {
+  try {
+    const timestamp = Date.now().toString().slice(-6);
+    const nuevoPaciente = {
+      dni: `NN-${timestamp}`,
+      nombre: 'NN',
+      apellido: 'Anónimo',
+      fecha_nacimiento: '1900-01-01',
+      sexo: 'Masculino'
+    };
+    await Paciente.createPaciente(nuevoPaciente);
+    res.redirect('/pacientes');
+  } catch (error) {
+    console.error('Error en el controlador al crear el paciente anónimo:', error);
+    res.status(500).send('Error interno del servidor.');
+  }
+};
+
 const mostrarFormularioEditar = async (req, res) => {
   try {
     const id = req.params.id;
@@ -107,6 +125,7 @@ module.exports = {
   listarPacientes,
   mostrarFormularioNuevo,
   crearPaciente,
+  crearPacienteAnonimo,
   verDetallePaciente,
   mostrarFormularioEditar,
   actualizarPaciente,

@@ -28,5 +28,9 @@ block content
                   input(type="hidden" name="id_internacion" value=internacion.internacion_id)
                   input(type="hidden" name="id_cama" value=internacion.cama_id)
                   button.btn.btn-success.btn-sm(type="submit") Dar de Alta
+                form.d-inline.ms-2(action="/internaciones/cancelar" method="POST" onsubmit="return confirm('¿Desea cancelar esta internación (ej. por error de carga)?');")
+                  input(type="hidden" name="id_internacion" value=internacion.internacion_id)
+                  input(type="hidden" name="id_cama" value=internacion.cama_id)
+                  button.btn.btn-danger.btn-sm(type="submit") Cancelar
   else
     .alert.alert-info No hay pacientes internados actualmente para evaluar.
