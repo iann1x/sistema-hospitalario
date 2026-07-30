@@ -40,8 +40,8 @@ app.get('/', (req, res) => {
 app.use('/auth', authRoutes);
 app.use('/pacientes', isAuthenticated, hasRole(['Admision']), pacienteRoutes);
 app.use('/internaciones', isAuthenticated, hasRole(['Admision']), internacionRoutes);
-app.use('/evaluaciones', isAuthenticated, hasRole(['Enfermeria']), evaluacionRoutes);
-app.use('/evaluaciones-medicas', isAuthenticated, hasRole(['Medico']), evaluacionMedicaRoutes);
+app.use('/evaluaciones', isAuthenticated, hasRole(['Enfermeria', 'Medico', 'Admin']), evaluacionRoutes);
+app.use('/evaluaciones-medicas', isAuthenticated, hasRole(['Medico', 'Admin']), evaluacionMedicaRoutes);
 app.use('/camas', isAuthenticated, hasRole(['Admision', 'Enfermeria', 'Medico', 'Admin']), camaRoutes);
 
 const PORT = process.env.PORT || 3000;

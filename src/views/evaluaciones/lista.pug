@@ -22,15 +22,18 @@ block content
               td= internacion.numero_habitacion
               td
                 a.btn.btn-secondary.btn-sm(href=`/pacientes/${internacion.paciente_id}`) Ver Ficha
-                a.btn.btn-info.btn-sm.ms-2(href=`/evaluaciones/nueva/${internacion.internacion_id}`) Eval. Enfermería
-                a.btn.btn-primary.btn-sm.ms-2(href=`/evaluaciones-medicas/nueva/${internacion.internacion_id}`) Eval. Médica
-                form.d-inline.ms-2(action="/internaciones/alta" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas dar de alta a este paciente?');")
-                  input(type="hidden" name="id_internacion" value=internacion.internacion_id)
-                  input(type="hidden" name="id_cama" value=internacion.cama_id)
-                  button.btn.btn-success.btn-sm(type="submit") Dar de Alta
-                form.d-inline.ms-2(action="/internaciones/cancelar" method="POST" onsubmit="return confirm('¿Desea cancelar esta internación (ej. por error de carga)?');")
-                  input(type="hidden" name="id_internacion" value=internacion.internacion_id)
-                  input(type="hidden" name="id_cama" value=internacion.cama_id)
-                  button.btn.btn-danger.btn-sm(type="submit") Cancelar
+                if session.rol === 'Admin' || session.rol === 'Enfermeria'
+                  a.btn.btn-info.btn-sm.ms-2(href=`/evaluaciones/nueva/${internacion.internacion_id}`) Eval. Enfermería
+                if session.rol === 'Admin' || session.rol === 'Medico'
+                  a.btn.btn-primary.btn-sm.ms-2(href=`/evaluaciones-medicas/nueva/${internacion.internacion_id}`) Eval. Médica
+                  form.d-inline.ms-2(action="/internaciones/alta" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas dar de alta a este paciente?');")
+                    input(type="hidden" name="id_internacion" value=internacion.internacion_id)
+                    input(type="hidden" name="id_cama" value=internacion.cama_id)
+                    button.btn.btn-success.btn-sm(type="submit") Dar de Alta
+                if session.rol === 'Admin' || session.rol === 'Admision'
+                  form.d-inline.ms-2(action="/internaciones/cancelar" method="POST" onsubmit="return confirm('¿Desea cancelar esta internación (ej. por error de carga)?');")
+                    input(type="hidden" name="id_internacion" value=internacion.internacion_id)
+                    input(type="hidden" name="id_cama" value=internacion.cama_id)
+                    button.btn.btn-danger.btn-sm(type="submit") Cancelar
   else
     .alert.alert-info No hay pacientes internados actualmente para evaluar.
