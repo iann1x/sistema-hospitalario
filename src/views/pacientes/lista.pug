@@ -1,0 +1,29 @@
+extends ../layout
+
+block content
+  .d-flex.justify-content-between.align-items-center.mb-3
+    h1= title
+    a.btn.btn-primary(href="/pacientes/nuevo") + Nuevo Paciente
+
+  if pacientes && pacientes.length
+    .table-responsive
+      table.table.table-striped.table-hover
+        thead
+          tr
+            th DNI
+            th Apellido
+            th Nombre
+            th Sexo
+            th Acciones
+        tbody
+          each paciente in pacientes
+            tr
+              td= paciente.dni
+              td= paciente.apellido
+              td= paciente.nombre
+              td= paciente.sexo
+              td
+                a.btn.btn-sm.btn-info(href=`/pacientes/${paciente.id}`) Ver Ficha
+                a.btn.btn-sm.btn-success.ms-2(href=`/internaciones/nueva?pacienteId=${paciente.id}`) Internar
+  else
+    .alert.alert-info No hay pacientes registrados para mostrar.

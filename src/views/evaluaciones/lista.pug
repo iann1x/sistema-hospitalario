@@ -1,0 +1,32 @@
+extends ../layout
+
+block content
+  h1.mb-4= title
+
+  if internaciones && internaciones.length
+    .table-responsive
+      table.table.table-striped.table-hover
+        thead
+          tr
+            th Apellido y Nombre
+            th DNI
+            th Cama
+            th Habitación
+            th Acciones
+        tbody
+          each internacion in internaciones
+            tr
+              td= `${internacion.apellido}, ${internacion.nombre}`
+              td= internacion.dni
+              td= internacion.codigo_cama
+              td= internacion.numero_habitacion
+              td
+                a.btn.btn-secondary.btn-sm(href=`/pacientes/${internacion.paciente_id}`) Ver Ficha
+                a.btn.btn-info.btn-sm.ms-2(href=`/evaluaciones/nueva/${internacion.internacion_id}`) Eval. Enfermería
+                a.btn.btn-primary.btn-sm.ms-2(href=`/evaluaciones-medicas/nueva/${internacion.internacion_id}`) Eval. Médica
+                form.d-inline.ms-2(action="/internaciones/alta" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas dar de alta a este paciente?');")
+                  input(type="hidden" name="id_internacion" value=internacion.internacion_id)
+                  input(type="hidden" name="id_cama" value=internacion.cama_id)
+                  button.btn.btn-success.btn-sm(type="submit") Dar de Alta
+  else
+    .alert.alert-info No hay pacientes internados actualmente para evaluar.

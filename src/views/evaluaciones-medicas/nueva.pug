@@ -1,0 +1,23 @@
+extends ../layout
+
+block content
+  h1.mb-4= title
+  p.lead Paciente: #{internacion.nombre} #{internacion.apellido}
+
+  form(action=`/evaluaciones-medicas/nueva/${internacion.internacion_id}` method="POST")
+    .mb-3
+      label.form-label(for="diagnostico") Diagnóstico Principal
+      textarea.form-control(id="diagnostico" name="diagnostico" rows="3" required)
+
+    .mb-3
+      label.form-label(for="tratamiento_sugerido") Tratamiento y Terapias Sugeridas
+      textarea.form-control(id="tratamiento_sugerido" name="tratamiento_sugerido" rows="4" required)
+
+    .mb-3
+      label.form-label(for="notas_medicas") Notas Médicas Adicionales
+      textarea.form-control(id="notas_medicas" name="notas_medicas" rows="4")
+
+    hr
+    .d-flex.justify-content-end
+      a.btn.btn-secondary(href="/evaluaciones") Cancelar
+      button.btn.btn-primary.ms-2(type="submit") Guardar Evaluación Médica

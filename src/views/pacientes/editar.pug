@@ -1,0 +1,40 @@
+extends ../layout
+
+block content
+  h1.mb-4= `${title}: ${paciente.nombre} ${paciente.apellido}`
+
+  form(action=`/pacientes/editar/${paciente.id}` method="POST")
+    .row
+      .col-md-6.mb-3
+        label.form-label(for="nombre") Nombre
+        input.form-control(type="text" id="nombre" name="nombre" value=paciente.nombre required)
+      .col-md-6.mb-3
+        label.form-label(for="apellido") Apellido
+        input.form-control(type="text" id="apellido" name="apellido" value=paciente.apellido required)
+
+    .row
+      .col-md-6.mb-3
+        label.form-label(for="dni") DNI
+        input.form-control(type="text" id="dni" name="dni" value=paciente.dni required)
+      .col-md-6.mb-3
+        label.form-label(for="fecha_nacimiento") Fecha de Nacimiento
+        input.form-control(type="date" id="fecha_nacimiento" name="fecha_nacimiento" value=paciente.fecha_nacimiento.toISOString().substring(0, 10) required)
+
+    .row
+      .col-md-6.mb-3
+        label.form-label(for="sexo") Sexo
+        select.form-select(id="sexo" name="sexo" required)
+          option(value="Masculino" selected=paciente.sexo === 'Masculino') Masculino
+          option(value="Femenino" selected=paciente.sexo === 'Femenino') Femenino
+      .col-md-6.mb-3
+        label.form-label(for="telefono") Teléfono
+        input.form-control(type="tel" id="telefono" name="telefono" value=paciente.telefono)
+
+    .mb-3
+      label.form-label(for="email") Email
+      input.form-control(type="email" id="email" name="email" value=paciente.email)
+
+    hr
+    .d-flex.justify-content-end
+      a.btn.btn-secondary(href=`/pacientes/${paciente.id}`) Cancelar
+      button.btn.btn-primary.ms-2(type="submit") Guardar Cambios

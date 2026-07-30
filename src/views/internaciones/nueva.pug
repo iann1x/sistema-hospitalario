@@ -1,0 +1,32 @@
+extends ../layout
+
+block content
+  h1.mb-4= title
+
+  if error
+    .alert.alert-danger= error
+
+  form(action="/internaciones" method="POST")
+    .row
+      .col-md-6.mb-3
+        label.form-label(for="paciente") Paciente a Internar
+        select.form-select(id="paciente" name="id_paciente" required)
+          option(value="" selected disabled) Seleccionar paciente...
+          each paciente in pacientes
+            option(value=paciente.id) #{paciente.nombre} #{paciente.apellido} (DNI: #{paciente.dni})
+      
+      .col-md-6.mb-3
+        label.form-label(for="cama") Asignar Cama
+        select.form-select(id="cama" name="id_cama" required)
+          option(value="" selected disabled) Seleccionar cama disponible...
+          each cama in camas
+            option(value=cama.id) Cama: #{cama.codigo_cama} (Habitación: #{cama.numero_habitacion} - Ala: #{cama.ala})
+
+    .mb-3
+      label.form-label(for="motivo_internacion") Motivo de la Internación
+      textarea.form-control(id="motivo_internacion" name="motivo_internacion" rows="3" required)
+
+    hr
+    .d-flex.justify-content-end
+      a.btn.btn-secondary(href="/") Cancelar
+      button.btn.btn-primary.ms-2(type="submit") Registrar Internación

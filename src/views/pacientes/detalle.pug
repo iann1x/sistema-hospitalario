@@ -1,0 +1,73 @@
+extends ../layout
+
+block content
+  h1.mb-4= title
+
+  .card
+    .card-header
+      | Información Personal
+    .card-body
+      dl.row
+        dt.col-sm-3 DNI
+        dd.col-sm-9= paciente.dni
+
+        dt.col-sm-3 Fecha de Nacimiento
+        dd.col-sm-9= new Date(paciente.fecha_nacimiento).toLocaleDateString('es-AR')
+
+        dt.col-sm-3 Sexo
+        dd.col-sm-9= paciente.sexo
+
+        dt.col-sm-3 Teléfono
+        dd.col-sm-9= paciente.telefono || 'No especificado'
+
+        dt.col-sm-3 Email
+        dd.col-sm-9= paciente.email || 'No especificado'
+
+  hr
+  .d-flex.align-items-center.mb-4
+    a.btn.btn-secondary(href="/pacientes") Volver a la lista
+    a.btn.btn-warning.ms-2(href=`/pacientes/editar/${paciente.id}`) Editar Paciente
+
+    form.d-inline.ms-2(action=`/pacientes/eliminar/${paciente.id}` method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar a este paciente? Esta acción no se puede deshacer.');")
+      button.btn.btn-danger(type="submit") Eliminar Paciente
+
+  h3.mt-4 Historial de Evaluaciones de Enfermería
+  if evaluacionesEnfermeria && evaluacionesEnfermeria.length
+    each evaluacion in evaluacionesEnfermeria
+      .card.mb-3
+        .card-header= `Evaluación del ${new Date(evaluacion.fecha_evaluacion).toLocaleString('es-AR')} por ${evaluacion.enfermero_username}`
+        .card-body
+          h6.card-title Signos Vitales
+          ul.list-unstyled.mb-3
+            li #[strong Presión Arterial:] #{evaluacion.presion_arterial || 'No registrado'}
+            li #[strong Frec. Cardíaca:] #{evaluacion.frecuencia_cardiaca || 'No registrado'} lat/min
+            li #[strong Frec. Respiratoria:] #{evaluacion.frecuencia_respiratoria || 'No registrado'} resp/min
+            li #[strong Temperatura:] #{evaluacion.temperatura || 'No registrado'} °C
+
+          h6.card-title Anamnesis
+          p #[strong Antecedentes:] #{evaluacion.antecedentes_medicos || 'No registrado'}
+          p #[strong Alergias:] #{evaluacion.alergias || 'No registrado'}
+          p #[strong Medicamentos Actuales:] #{evaluacion.medicamentos_actuales || 'No registrado'}
+
+          h6.card-title Evaluación y Plan
+          p #[strong Observaciones:] #{evaluacion.observaciones_generales || 'No registrado'}
+          p #[strong Plan de Cuidados:] #{evaluacion.plan_cuidados || 'No registrado'}
+  else
+    .alert.alert-info No hay evaluaciones de enfermería registradas para este paciente.
+
+  h3.mt-4 Historial de Evaluaciones Médicas
+  if evaluacionesMedicas && evaluacionesMedicas.length
+    each evaluacion in evaluacionesMedicas
+      .card.mb-3
+        .card-header= `Evaluación del ${new Date(evaluacion.fecha_evaluacion).toLocaleString('es-AR')} por ${evaluacion.medico_username}`
+        .card-body
+          h6.card-title Diagnóstico
+          p= evaluacion.diagnostico || 'No registrado'
+
+          h6.card-title Tratamiento Sugerido
+          p= evaluacion.tratamiento_sugerido || 'No registrado'
+
+          h6.card-title Notas Adicionales
+          p= evaluacion.notas_medicas || 'No registrado'
+  else
+    .alert.alert-info No hay evaluaciones médicas registradas para este paciente.

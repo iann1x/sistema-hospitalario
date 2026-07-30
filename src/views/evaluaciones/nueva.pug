@@ -1,0 +1,48 @@
+extends ../layout
+
+block content
+  h1.mb-4= title
+  p.lead Paciente: #{internacion.nombre} #{internacion.apellido}
+
+  form(action=`/evaluaciones/nueva/${internacion.internacion_id}` method="POST")
+    h5.mt-4 Signos Vitales
+    hr
+    .row
+      .col-md-3.mb-3
+        label.form-label(for="presion_arterial") Presión Arterial (ej: 120/80)
+        input.form-control(type="text" id="presion_arterial" name="presion_arterial")
+      .col-md-3.mb-3
+        label.form-label(for="frecuencia_cardiaca") Frecuencia Cardíaca (lat/min)
+        input.form-control(type="number" id="frecuencia_cardiaca" name="frecuencia_cardiaca")
+      .col-md-3.mb-3
+        label.form-label(for="frecuencia_respiratoria") Frecuencia Respiratoria (resp/min)
+        input.form-control(type="number" id="frecuencia_respiratoria" name="frecuencia_respiratoria")
+      .col-md-3.mb-3
+        label.form-label(for="temperatura") Temperatura (°C)
+        input.form-control(type="number" step="0.1" id="temperatura" name="temperatura")
+
+    h5.mt-4 Anamnesis
+    hr
+    .mb-3
+      label.form-label(for="antecedentes_medicos") Antecedentes Médicos Relevantes
+      textarea.form-control(id="antecedentes_medicos" name="antecedentes_medicos" rows="3")
+    .mb-3
+      label.form-label(for="alergias") Alergias Conocidas
+      textarea.form-control(id="alergias" name="alergias" rows="2")
+    .mb-3
+      label.form-label(for="medicamentos_actuales") Medicamentos Actuales
+      textarea.form-control(id="medicamentos_actuales" name="medicamentos_actuales" rows="2")
+
+    h5.mt-4 Evaluación Actual
+    hr
+    .mb-3
+      label.form-label(for="observaciones_generales") Observaciones Generales
+      textarea.form-control(id="observaciones_generales" name="observaciones_generales" rows="4")
+    .mb-3
+      label.form-label(for="plan_cuidados") Plan de Cuidados Preliminar
+      textarea.form-control(id="plan_cuidados" name="plan_cuidados" rows="4")
+
+    hr
+    .d-flex.justify-content-end
+      a.btn.btn-secondary(href="/evaluaciones") Cancelar
+      button.btn.btn-primary.ms-2(type="submit") Guardar Evaluación

@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  .p-5.mb-4.bg-body-tertiary.rounded-3
+    .container-fluid.py-5
+      h1.display-5.fw-bold= title
+      p.col-md-8.fs-4
+        | Desde aquí podrás gestionar pacientes, internaciones y evaluaciones médicas.
+      hr.my-4
+      a.btn.btn-primary.btn-lg(href="/pacientes", role="button") Ver Pacientes

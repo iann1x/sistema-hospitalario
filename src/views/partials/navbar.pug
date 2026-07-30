@@ -1,0 +1,28 @@
+nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+  .container
+    a.navbar-brand(href="/") HIS
+    button.navbar-toggler(type="button", data-bs-toggle="collapse", data-bs-target="#navbarNav")
+      span.navbar-toggler-icon
+    .collapse.navbar-collapse#navbarNav
+      ul.navbar-nav.ms-auto
+        li.nav-item
+          a.nav-link(href="/") Inicio
+        if session && session.userId
+          li.nav-item
+            a.nav-link(href="/camas") Camas
+          if session.rol === 'Admin' || session.rol === 'Admision'
+            li.nav-item
+              a.nav-link(href="/pacientes") Pacientes
+            li.nav-item
+              a.nav-link(href="/internaciones/nueva") Nueva Internación
+          if session.rol === 'Admin' || session.rol === 'Enfermeria'
+            li.nav-item
+              a.nav-link(href="/evaluaciones") Evaluaciones de Enfermería
+          if session.rol === 'Admin' || session.rol === 'Medico'
+            li.nav-item
+              a.nav-link(href="/evaluaciones-medicas") Evaluaciones Médicas
+          li.nav-item
+            a.nav-link.text-danger(href="/auth/logout") Cerrar Sesión (#{session.username})
+        else
+          li.nav-item
+            a.nav-link(href="/auth/login") Iniciar Sesión

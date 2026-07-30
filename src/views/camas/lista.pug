@@ -1,0 +1,35 @@
+extends ../layout
+
+block content
+  h1.mb-4= title
+
+  .table-responsive
+    table.table.table-bordered.table-striped
+      thead.table-dark
+        tr
+          th Cama
+          th Habitación
+          th Ala
+          th Estado
+          th Higienizada
+          th Acciones
+      tbody
+        each cama in camas
+          tr
+            td= cama.codigo_cama
+            td= cama.numero_habitacion
+            td= cama.ala
+            td
+              if cama.estado === 'Ocupada'
+                span.badge.bg-danger Ocupada
+              else
+                span.badge.bg-success Libre
+            td
+              if cama.higienizada
+                span.badge.bg-success Sí
+              else
+                span.badge.bg-warning No
+            td
+              if cama.estado === 'Libre' && !cama.higienizada
+                form(action=`/camas/higienizar/${cama.id}` method="POST")
+                  button.btn.btn-success.btn-sm(type="submit") Higienizar

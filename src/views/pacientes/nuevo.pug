@@ -1,0 +1,41 @@
+extends ../layout
+
+block content
+  h1.mb-4= title
+
+  form(action="/pacientes" method="POST")
+    .row
+      .col-md-6.mb-3
+        label.form-label(for="nombre") Nombre
+        input.form-control(type="text" id="nombre" name="nombre" required)
+      .col-md-6.mb-3
+        label.form-label(for="apellido") Apellido
+        input.form-control(type="text" id="apellido" name="apellido" required)
+
+    .row
+      .col-md-6.mb-3
+        label.form-label(for="dni") DNI
+        input.form-control(type="text" id="dni" name="dni" required)
+      .col-md-6.mb-3
+        label.form-label(for="fecha_nacimiento") Fecha de Nacimiento
+        input.form-control(type="date" id="fecha_nacimiento" name="fecha_nacimiento" required)
+
+    .row
+      .col-md-6.mb-3
+        label.form-label(for="sexo") Sexo
+        select.form-select(id="sexo" name="sexo" required)
+          option(value="" selected disabled) Seleccionar...
+          option(value="Masculino") Masculino
+          option(value="Femenino") Femenino
+      .col-md-6.mb-3
+        label.form-label(for="telefono") Teléfono
+        input.form-control(type="tel" id="telefono" name="telefono")
+
+    .mb-3
+      label.form-label(for="email") Email
+      input.form-control(type="email" id="email" name="email")
+
+    hr
+    .d-flex.justify-content-end
+      a.btn.btn-secondary(href="/pacientes") Cancelar
+      button.btn.btn-primary.ms-2(type="submit") Guardar Paciente
