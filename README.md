@@ -87,14 +87,16 @@ Para correr este proyecto en un entorno local, sigue estos pasos:
 
 ## Usuarios de Prueba
 
-La base de datos se crea con los siguientes usuarios de prueba.
+La base de datos se crea con los siguientes usuarios de prueba (todos tienen la contraseña **`123`** gracias a la implementación de seguridad con `bcrypt`):
 
-| Rol        | Username  |
-|------------|-----------|
-| Admin      | `admin`     |
-| Admisión   | `admision`  |
-| Enfermería | `enfermera` |
-| Médico     | `medico`    |
+| Rol        | Username  | Contraseña |
+|------------|-----------|------------|
+| Admin      | `admin`     | `123`        |
+| Admisión   | `admision`  | `123`        |
+| Enfermería | `enfermera` | `123`        |
+| Médico     | `medico`    | `123`        |
+
+**Nota sobre la seguridad:** Se implementó autenticación mediante sesiones (`express-session`) y middlewares para protección de rutas según el rol. Las contraseñas están hasheadas en la base de datos para prevenir vulnerabilidades de seguridad. Además, se agregaron casos borde como el paciente derivado por guardia (Paciente Anónimo/NN) y la cancelación de internaciones (por error humano).
 
 ---
 
